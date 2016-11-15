@@ -1,6 +1,6 @@
 # Blatantly ripped off of antimony gem.
 # https://github.com/manheim/antimony 
-# I needed something a touch lighter.
+# I needed to take your thing apart to understand it.
 
 
 module Session_Settings
@@ -57,6 +57,30 @@ module Session_Settings
   SEMICOLON = ';'.freeze
 
   LINE = /.{80}/
+  
+end
+
+class Session
+  
+  attr_accessor :loud
+  attr_reader :connection, :host, :loaded_formulas 
+  
+  include Session_Settings 
+
+  def initialize(host, loud=false)
+    @host = host
+    @loud = loud
+     
+    @screen_text = blank_screen
+    @loaded_formulas = []
+    @wait_options = { "Match" => /.{5}/, "Timeout" => 0.3}    
+    connect
+    update_screen
+  end
+  
+  def connect
+    @connection = Net::Telnet::new("Host" => @host, "Timeout" => 1)
+  end  
 
   def blank_screen
     (1..1920).to_a.map { |_i| SPACE }
@@ -64,32 +88,6 @@ module Session_Settings
 
   def printable_screen_text
     @screen_text.join.scan LINE
-  end
-  
-end
-
-class Session
-  
-  attr_accessor :loud
-  attr_reader :connection, :host 
-  
-  include Session_Settings 
-
-  def initialize(host, username, password, loud=false)
-    @host = host
-    @loud = loud
-     
-    @connection = Net::Telnet::new("Host" => host, "Timeout" => 1)
-    @screen_text = blank_screen
-    
-    @wait_options = { "Match" => /.{5}/, "Timeout" => 0.3}
-    
-    update_screen
-    log_in username, password
-  end
-
-  def log_in username, password
-    send username + "\t" + password + "\r"
   end
 
   def send(text)
@@ -158,19 +156,20 @@ class Session
   def connected?
     !@connection.sock.closed?
   end
-
-  def logged_in?
-    send "\x03"
-    status = @screen_text.include? "System Request"
-    f12
-    status
-  end
   
-end
+  def load formula_name
+    formula_name = formula_name.titleize
+    file_name = formula_name.downcase.replace " ", "_"    
+    file_path = "formulas/" + file_name + ".rb"
+    config_method = file_name.downcase + "_config"
 
-module Farts
- def fart
-   puts 'ffffbbbbttt.'
- end
+    
+    return false if @loaded_formulas.include? formula_name
+
+    load file_path
+    self.extend filename.camelcase.constantize
+    self.method(config_method.to_sym).call
+    
+    @loaded_formulas << formula_name
+  end
 end
- 
