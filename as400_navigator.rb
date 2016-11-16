@@ -162,12 +162,12 @@ class Session
     file_name = formula_name.downcase.replace " ", "_"    
     file_path = "formulas/" + file_name + ".rb"
     config_method = file_name.downcase + "_config"
-
+    module_name = file_name.camelcase
     
     return false if @loaded_formulas.include? formula_name
 
     load file_path
-    self.extend filename.camelcase.constantize
+    self.extend module_name.constantize
     self.method(config_method.to_sym).call
     
     @loaded_formulas << formula_name
