@@ -78,8 +78,8 @@ class Session
     update_screen
   end
   
-  def connect
-    @connection = Net::Telnet::new("Host" => @host, "Timeout" => 1)
+  def connect host=@host
+    @connection = Net::Telnet::new("Host" => host, "Timeout" => 1)
   end  
 
   def blank_screen
@@ -157,13 +157,13 @@ class Session
     !@connection.sock.closed?
   end
   
-  def load formula_name
+  def load_script formula_name
     formula_name = formula_name.titleize
-    file_name = formula_name.downcase.replace " ", "_"    
+    file_name = formula_name.downcase.gsub " ", "_"    
     file_path = "formulas/" + file_name + ".rb"
     config_method = file_name.downcase + "_config"
     module_name = file_name.camelcase
-    
+
     return false if @loaded_formulas.include? formula_name
 
     load file_path

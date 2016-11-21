@@ -1,7 +1,7 @@
 module As400Nav
 
   def as400_nav_config
-    load "auth"
+    load_script "auth"
     @locations = {}
   end
 
