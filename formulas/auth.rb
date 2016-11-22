@@ -3,7 +3,9 @@ module Auth
   def auth_config
   end
 
-  def log_in username, password
+  def log_in
+    username = ENV['as400_user']
+    password = ENV['as400_pass']
     send username + "\t" + password + "\r"
     enter
   end

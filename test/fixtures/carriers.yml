@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  date: 2016-11-22 13:50:49
+  cubes: 1
+  weight: 1
+  value: 1
+  orders: MyText
+  order_count: 1
+
+two:
+  name: MyString
+  date: 2016-11-22 13:50:49
+  cubes: 1
+  weight: 1
+  value: 1
+  orders: MyText
+  order_count: 1

@@ -19,7 +19,7 @@ module As400Nav
   end
 
   def home?
-    screen_text.include? "APPLICATION PLUS - Main Menu"
+    screen_text.include? "APPLICATION PLUS"
   end
   
   def go_home

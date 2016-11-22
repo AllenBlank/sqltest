@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  status: MyString
+  ship_to: 1
+  run: 1
+  entry: 2016-11-21 16:29:44
+  ship: 2016-11-21 16:29:44
+  weight: 1
+  cubes: 1
+  pieces: 1
+  company: 1
+  customer: 1
+  carrier: MyString
+  danger: false
+
+two:
+  status: MyString
+  ship_to: 1
+  run: 1
+  entry: 2016-11-21 16:29:44
+  ship: 2016-11-21 16:29:44
+  weight: 1
+  cubes: 1
+  pieces: 1
+  company: 1
+  customer: 1
+  carrier: MyString
+  danger: false
