@@ -8,13 +8,15 @@ module CarrierInquiry
   end
 
   def carrier_inquiry( name, company="01", date=next_ship_day )
-    send "\t\t\t" + company + carrier
-    send "YYYDHNNN\t\t" + date + date
+    go_to "carrier inquiry"
+    send "\t\t\t" + company + name + "\r"
+    send "YYYDH\t\tNNN\t\t" + date + date
     f6
 
     return false unless screen_text.include? "CARRIER STOP"
 
-    carrier = Carrier.new    
+    carrier        = Carrier.new
+    carrier.date   = Date.strptime( date , "%m%d%y" )    
     carrier.name   = name
     carrier.cubes  = value_at(1 , 69, 6).gsub(",","").to_i
     carrier.weight = value_at(2 , 69, 6).gsub(",","").to_i
@@ -29,13 +31,15 @@ module CarrierInquiry
         unless value_at(row, 3, 3).blank?
           order_number = value_at(row, 31, 8)
           stop         = value_at(row, 18, 3).to_i
-          carrier.orders[stop] = []
+          carrier.orders[stop] = [] if carrier.orders[stop].nil?
           carrier.orders[stop] << order_number
-          carrier.order_count  = order_count + 1
+          carrier.order_count  = carrier.order_count + 1
         end
       end
-      send "\x04" #page down
+      send "\x04" # page down
+      refresh
     end
     carrier.save
     carrier
   end 
+end

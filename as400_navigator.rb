@@ -80,6 +80,10 @@ class Session
   
   def connect host=@host
     @connection = Net::Telnet::new("Host" => host, "Timeout" => 1)
+  end
+  
+  def disconnect
+    @connection.close
   end  
 
   def blank_screen

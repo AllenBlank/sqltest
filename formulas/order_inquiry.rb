@@ -13,14 +13,14 @@ module OrderInquiry
     order = Order.new
     order.status = value_at(5, 22, 8).strip
     order.ship_to = value_at(5, 57, 6).to_i
-    
+    order.number = order_number
     send "1\r" # select the order and go to the first inquiry page
 
     unless screen_text.include? "ORDER DISPLAY" # just forget it if it's invoiced already
       order.save
       return order
     end
-
+     
     order.run                 = value_at(9 , 13, 8 ).to_i
     order.entry               = Date.strptime( value_at(12, 15, 8 ), "%m/%d/%y" )
     order.ship                = Date.strptime( value_at(13, 15, 8 ), "%m/%d/%y" )
