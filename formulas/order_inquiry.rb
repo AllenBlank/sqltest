@@ -28,11 +28,11 @@ module OrderInquiry
     order.cubes               = value_at(20, 59, 10).to_i
     
     send "\r" # go to the second inquiry page
-    customer_unparsed   = value_at(1 , 10, 49).split(" ")[0].split("/")
+    customer_unparsed         = value_at(1 , 10, 49).split(" ")[0].split("/")
     order.company             = customer_unparsed[0].to_i
     order.customer            = customer_unparsed[1].to_i
     order.carrier             = value_at(14, 11, 5 ).strip
-    
+
     send "\r" # go to the line items page
     
     waxie_truck_only_strings = [
