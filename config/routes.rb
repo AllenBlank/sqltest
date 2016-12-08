@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :carriers
+  resources :orders, only: [:show, :index]
+  resources :carriers, only: [:show, :index]
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

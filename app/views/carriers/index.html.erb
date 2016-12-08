@@ -12,14 +12,30 @@
   <tbody>
     <% @carriers.each do |carrier| %>
       <tr>
+        <td><h3><%= carrier.name %></h3></td>
+      </tr>
+      <tr>  
+        <td><b>ID:</b> <%= carrier.id %></td>
+      <tr>
+      <tr>  
+        <td><b>Weight:</b> <%= carrier.weight %></td>
+      <tr>
+      <tr>  
+        <td><b>Cubes:</b> <%= carrier.cubes %></td>
+      <tr>
+      <tr>  
+        <td>
+          <% carrier.orders.each do |stop,orders| %>
+            <tr><td><b><%= stop %></b></td></tr>
+            <% orders.each do |order| %>
+              <tr><td><%= order %><td></tr>
+            <% end %>
+          <% end %> 
+        </td>
+      <tr>
+      <tr>
         <td><%= link_to 'Show', carrier %></td>
-        <td><%= link_to 'Edit', edit_carrier_path(carrier) %></td>
-        <td><%= link_to 'Destroy', carrier, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Carrier', new_carrier_path %>
