@@ -2,40 +2,6 @@
 
 <h1>Listing Carriers</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @carriers.each do |carrier| %>
-      <tr>
-        <td><h3><%= carrier.name %></h3></td>
-      </tr>
-      <tr>  
-        <td><b>ID:</b> <%= carrier.id %></td>
-      <tr>
-      <tr>  
-        <td><b>Weight:</b> <%= carrier.weight %></td>
-      <tr>
-      <tr>  
-        <td><b>Cubes:</b> <%= carrier.cubes %></td>
-      <tr>
-      <tr>  
-        <td>
-          <% carrier.orders.each do |stop,orders| %>
-            <tr><td><b><%= stop %></b></td></tr>
-            <% orders.each do |order| %>
-              <tr><td><%= order %><td></tr>
-            <% end %>
-          <% end %> 
-        </td>
-      <tr>
-      <tr>
-        <td><%= link_to 'Show', carrier %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<% @carriers.each do |carrier| %>
+  <%= render carrier %>
+<% end %>
